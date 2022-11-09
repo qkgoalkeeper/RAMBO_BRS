@@ -1,0 +1,2 @@
+query time wall clock is :0.0401234, cpu is :0.040145 milisec
+
