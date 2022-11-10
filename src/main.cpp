@@ -15,8 +15,10 @@
 #include "bitArray.h"
 #include <ctime>
 #include <unordered_map>
-
+#include <unordered_set>
 using namespace std;
+
+
 
 int main(int argc, char **argv) {
 
@@ -27,12 +29,12 @@ int main(int argc, char **argv) {
     bool test = false;
     bool deser = true;
 
-    int n_perSet = 10000000; //cardinality of each set
+    int n_perSet = 10000000; //num of items(judge how to build bloomfilter)
     int R_all = 3;
-    int B_all = 15;
+    int B_all = 20;
 
-    int K = Ki; // total number of sets
-
+    //int K = Ki; // total number of sets
+    int K = 1000000;
     float fp_ops;
     float ins_time;
     float query_time;
@@ -107,6 +109,7 @@ int main(int argc, char **argv) {
 // }
 
     if (test) { //test dna data
+    /*
         RAMBO myRambo(n_perSet, R_all, B_all, K);
         // test RAMBO
         std::vector<string> alllines = readlines("data/ArtfcKmersToy" + to_string(K) + ".txt", 0);
@@ -165,62 +168,161 @@ int main(int argc, char **argv) {
         cout << "query time wall clock is :" << QTpt << ", cpu is :" << QTpt_cpu << " milisec\n\n";
         FPtestFile << "query time wall clock is :" << QTpt << ", cpu is :" << QTpt_cpu << " milisec\n\n";
         query_time = QTpt_cpu;
-    }else{ //test blockchain data
+        */
+    }else{ 
+        //test blockchain data！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+        
+        //std::vector<string> alllines = readlines("test_modified.txt", 0);
+        //std::vector<string> alllines = readlines("tag_and_edge_modified.txt", 0);
+//         std::vector<string> alllines = readlines("test_modified.txt", 0);
+//         std::unordered_map<string, vector<int>> testKeys;
 
-        std::vector<string> alllines = readlines("test_modified.txt", 0);
+//         std::vector<pair<string, string>> data_key_number;
+//         int start = 0;
+//         int end = 0;
+//         int bias = -1;
+//         int length = alllines.size();
 
-        std::unordered_map<string, vector<int>> testKeys;
+//         for (uint i = 0; i < length; i++) {
+//             std::vector<string> KeySets = line2array(alllines[i], ';');//sets for a key
+//             // testKeys.push_back(KeySets[0]);
+//             // gt_size.push_back( line2array(KeySets[1], ',').size() );
+//             testKeys[KeySets[0]].emplace_back(atoi(KeySets[1].c_str()));
+//             data_key_number.emplace_back(make_pair(KeySets[0], KeySets[1]));
 
-        std::vector<pair<string, string>> data_key_number;
-        int start = 0;
-        int end = 0;
-        int bias = -1;
-        int length = alllines.size();
+//             if (i == 0) {
+//                 start = atoi(KeySets[1].c_str());
+//             }
+//             if (i == length - 1) {
+//                 end = 1 + atoi(KeySets[1].c_str());
+//             }
+//         }
+//         bias = start - 1;
 
-        for (uint i = 0; i < length; i++) {
-            std::vector<string> KeySets = line2array(alllines[i], ';');//sets for a key
-            // testKeys.push_back(KeySets[0]);
-            // gt_size.push_back( line2array(KeySets[1], ',').size() );
-            testKeys[KeySets[0]].emplace_back(atoi(KeySets[1].c_str()));
-            data_key_number.emplace_back(make_pair(KeySets[0], KeySets[1]));
+//         K = end - bias;
+//         RAMBO myRambo(n_perSet, R_all, B_all, K);
+//         myRambo.createMetaRambo_range(testKeys, false);
+//         myRambo.insertion_pairs(data_key_number);
 
-            if (i == 0) {
-                start = atoi(KeySets[1].c_str());
+//         double fp = 0;
+//         for (auto x: testKeys) {
+//             //cout << x.first << ":" << endl;
+//             bitArray MemVec = myRambo.query_bias(x.first, x.first.size(), bias);
+//             // cout<<MemVec.getcount()<<endl;
+//             // cout<<gt_size[i]<<endl;
+//             //cout << "		guess answer:" << endl;
+//             int guess_num = 0;
+//             for (int kp = 0; kp < MemVec.ar_size; kp++) {
+//                 // std::cout << "kp is" <<kp<< ' ';
+//                 if (MemVec.A[(kp / 8)] & (1 << (kp % 8))) {
+//                     guess_num++;
+//                     //cout << "			" << to_string(kp + bias) << endl;
+//                 }
+//             }
+//             /*
+//             cout << endl;
+// //             fp = fp + (MemVec.getcount())*0.1/((K - gt_size[i])*0.1);
+//             cout << "		true answer:" << endl;
+//             for (auto y: x.second) {
+//                 cout << "			" << y << endl;
+//             }
+//             cout << endl;
+//             */
+//             int true_num = x.second.size();
+//             //cout<<"delta_fp = "<<((guess_num-true_num)*0.1)/(guess_num*0.1)<<endl;
+//             fp = fp + ((guess_num-true_num)*0.1)/(guess_num*0.1);
+
+//         }
+//         cout<<"conclusion:"<<endl;
+//         cout<<"sum false positive rate:"<<fp<<endl;
+//         cout<<"key num:"<<testKeys.size()<<endl;
+//         cout<<"average false positive rate:"<<(fp*0.1)/(testKeys.size()*0.1)<<endl;
+
+            //fstream f("test_modified.txt");
+            //fstream f("tag_and_edge_modified.txt");
+            fstream f("xaa");
+            unordered_set<string> key_set;
+            int start = 4638567;
+            //int end = 4981465;
+
+            //int end = 12210044;
+            int end = 8165992;
+            string line;
+            
+            int bias = start - 1;
+            K = end - bias;
+            cout<<"start build myrambo"<<endl;
+            RAMBO myRambo(n_perSet, R_all, B_all, K);
+
+
+
+            cout<<"start insert lines"<<endl;
+            while(getline(f,line)){
+                std::vector<string> KeySets = line2array(line, ';');
+                key_set.insert(KeySets[0]);
+                myRambo.createMetaRambo_single(atoi(KeySets[1].c_str()));
+                myRambo.insertion_pair(make_pair(KeySets[0], KeySets[1]));
             }
-            if (i == length - 1) {
-                end = 1 + atoi(KeySets[1].c_str());
+
+
+            cout<<"start query"<<endl;
+            //ofstream out("1110answer.txt");
+            
+            
+            
+            ofstream out(argv[1]);
+            out<<"bias = "<<bias<<endl;
+            out<<key_set.size()<<endl;
+            
+            
+
+            for (auto &x: key_set) {
+
+
+                cout<<x<<endl;
+                // //cout << x.first << ":" << endl;
+                bitArray MemVec = myRambo.query_bias(x, x.size(), bias);
+                out<<x<<endl;
+                // // out.write(MemVec.A,MemVec.ar_size/8 +1);
+                
+
+                
+                out<<MemVec.getcount()<<endl;
+
+
+                MemVec.bitArray_delete();
+                // // cout<<gt_size[i]<<endl;
+                // //cout << "		guess answer:" << endl;
+                // // int guess_num = 0;
+                
+                // for (int kp = 0; kp < MemVec.ar_size; kp++) {
+                //     // std::cout << "kp is" <<kp<< ' ';
+                //     if (MemVec.A[(kp / 8)] & (1 << (kp % 8))) {
+                //         //guess_num++;
+                //         out <<kp + bias<<" ";
+                //     }
+                // }
+                // out<<endl;
+                
+                
+                
+                
+    //             cout << endl;
+    // //             fp = fp + (MemVec.getcount())*0.1/((K - gt_size[i])*0.1);
+    //             cout << "		true answer:" << endl;
+    //             for (auto y: x.second) {
+    //                 cout << "			" << y << endl;
+    //             }
+    //             cout << endl;
+                
+    //             // int true_num = x.second.size();
+    //             // //cout<<"delta_fp = "<<((guess_num-true_num)*0.1)/(guess_num*0.1)<<endl;
+    //             // fp = fp + ((guess_num-true_num)*0.1)/(guess_num*0.1);
+                
             }
-        }
-        bias = start - 1;
-
-        K = end - bias;
-        RAMBO myRambo(n_perSet, R_all, B_all, K);
-        myRambo.createMetaRambo_range(testKeys, false);
-        myRambo.insertion_pairs(data_key_number);
+            
 
 
-        for (auto x: testKeys) {
-            cout << x.first << ":" << endl;
-            bitArray MemVec = myRambo.query_bias(x.first, x.first.size(), bias);
-            // cout<<MemVec.getcount()<<endl;
-            // cout<<gt_size[i]<<endl;
-            cout << "		guess answer:" << endl;
-            for (int kp = 0; kp < MemVec.ar_size; kp++) {
-                // std::cout << "kp is" <<kp<< ' ';
-                if (MemVec.A[(kp / 8)] & (1 << (kp % 8))) {
-                    // count++;
-                    cout << "			" << to_string(kp + bias) << endl;
-                }
-            }
-            cout << endl;
-            // fp = fp + (MemVec.getcount())*0.1/((K - gt_size[i])*0.1);
-            cout << "		true answer:" << endl;
-            for (auto y: x.second) {
-                cout << "			" << y << endl;
-            }
-            cout << endl;
-
-        }
 
 
     }

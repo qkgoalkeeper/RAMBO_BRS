@@ -297,6 +297,14 @@ void RAMBO::createMetaRambo_range(std::unordered_map<std::string, std::vector<in
     }
 }
 
+void RAMBO::createMetaRambo_single(int value){
+        vector<uint> hashvals = RAMBO::hashfunc(std::to_string(value),
+                                                std::to_string(value).size()); // R hashvals, each with max value B
+        for (int r = 0; r < R; r++) {
+            metaRambo[hashvals[r] + B * r].push_back(value);
+        }
+}
+
 
 void RAMBO::insertion_pairs(std::vector<std::pair<std::string, std::string>> &data_key_number) {
     for (auto pair: data_key_number) {
@@ -307,6 +315,15 @@ void RAMBO::insertion_pairs(std::vector<std::pair<std::string, std::string>> &da
             Rambo_array[hashvals[r] + B * r]->insert(temp);
         }
     }
+}
+
+void RAMBO::insertion_pair(std::pair<std::string, std::string> pair1){
+        string temp = to_string(atoi(pair1.second.c_str()));
+        vector<uint> hashvals = RAMBO::hashfunc(temp, temp.size());
+        for (int r = 0; r < R; r++) {
+            vector<uint> temp = myhash(pair1.first, pair1.first.size(), k, r, range);// i is the key
+            Rambo_array[hashvals[r] + B * r]->insert(temp);
+        }
 }
 
 bitArray RAMBO::query_bias(std::string query_key, int len, int bias) {
@@ -336,6 +353,8 @@ bitArray RAMBO::query_bias(std::string query_key, int len, int bias) {
             bitarray_K = bitarray_K1;
         } else {
             bitarray_K.ANDop(bitarray_K1.A);
+            bitarray_K1.bitArray_delete();
+
         }
     }
     vector<uint>().swap(check);

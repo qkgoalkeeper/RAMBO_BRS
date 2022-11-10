@@ -12,6 +12,12 @@ bitArray::bitArray(int size){
      A[i] = '\0'; // Clear the bit array
    }
 }
+void bitArray::bitArray_delete()
+{
+    delete[] A;
+};
+
+
 
 void bitArray::SetBit(uint k) {
    A[(k/8)] |= (1 << (k%8));
