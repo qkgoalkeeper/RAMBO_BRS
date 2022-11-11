@@ -330,6 +330,7 @@ bitArray RAMBO::query_bias(std::string query_key, int len, int bias) {
 
     // set<int> resUnion[R]; //constains union results in it.
     bitArray bitarray_K(K1);
+    
     // bitset<Ki> bitarray_K;
     // set<int> res;
     // float count=0.0;

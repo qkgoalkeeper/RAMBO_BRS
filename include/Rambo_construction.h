@@ -48,6 +48,10 @@ public:
 
     void insertion_pairs(std::vector<std::pair<std::string, std::string>> &data_key_number);
 
+    void createMetaRambo_single(int value);
+
+    void insertion_pair(std::pair<std::string, std::string> pair1);
+
     bitArray query_bias(std::string query_key, int len, int bias);
 
 

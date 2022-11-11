@@ -10,6 +10,7 @@ class bitArray{
         // friend class boost::serialization::access;
 
         bitArray(int size);
+        void bitArray_delete();
         void SetBit(uint k);
         void ClearBit( uint k);
         bool TestBit( uint k);

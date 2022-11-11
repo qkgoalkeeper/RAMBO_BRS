@@ -18,7 +18,7 @@
 #include <unordered_set>
 using namespace std;
 
-
+const volatile int K2 = 0;
 
 int main(int argc, char **argv) {
 
@@ -251,6 +251,9 @@ int main(int argc, char **argv) {
             
             int bias = start - 1;
             K = end - bias;
+
+            
+
             cout<<"start build myrambo"<<endl;
             RAMBO myRambo(n_perSet, R_all, B_all, K);
 
@@ -281,6 +284,7 @@ int main(int argc, char **argv) {
 
                 cout<<x<<endl;
                 // //cout << x.first << ":" << endl;
+                
                 bitArray MemVec = myRambo.query_bias(x, x.size(), bias);
                 out<<x<<endl;
                 // // out.write(MemVec.A,MemVec.ar_size/8 +1);
