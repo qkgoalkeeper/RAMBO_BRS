@@ -18,18 +18,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a940989-5e8d-4b58-8a74-3528b53fb67b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FPtestFileToy.txt" beforeDir="false" afterPath="$PROJECT_DIR$/FPtestFileToy.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/program" beforeDir="false" afterPath="$PROJECT_DIR$/build/program" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/src/MurmurHash3.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/src/MurmurHash3.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/src/MyBloom.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/src/MyBloom.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/src/Rambo_construction.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/src/Rambo_construction.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/src/bitArray.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/src/bitArray.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/src/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/src/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/src/utils.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/src/utils.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ArtfcKmersToy100.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/ArtfcKmersToy100.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/artificialKmer.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/artificialKmer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/MurmurHash3.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/MurmurHash3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/MyBloom.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/MyBloom.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/Rambo_construction.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/Rambo_construction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/bitArray.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/bitArray.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/constants.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/utils.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MurmurHash3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/MurmurHash3.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MyBloom.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/MyBloom.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Rambo_construction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rambo_construction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bitArray.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/bitArray.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/insertBloomfilter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/insertBloomfilter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_modified.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test_modified.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,11 +108,6 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RunManager" selected="Makefile Application.all">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="RAMBO_BRS" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -119,6 +126,11 @@
     <configuration name="release" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="RAMBO_BRS" TARGET_NAME="release" CONFIG_NAME="release" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
@@ -141,7 +153,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667986061007</updated>
-      <workItem from="1667986062740" duration="3392000" />
+      <workItem from="1667986062740" duration="4027000" />
+      <workItem from="1668139410566" duration="9007000" />
     </task>
     <servers />
   </component>

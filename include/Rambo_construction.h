@@ -8,6 +8,8 @@
 #include "constants.h"
 #include "bitArray.h"
 #include <unordered_map>
+#include <unordered_set>
+#include <boost/dynamic_bitset.hpp>
 
 // vector<uint> hashfunc( void* key, int len, int R, int B){
 // }
@@ -27,24 +29,24 @@ public:
 
     std::vector<std::string> getdata(std::string filenameSet);
 
-    bitArray query(std::string query_key, int len);
+    //bitArray query(std::string query_key, int len);
 
-    void createMetaRambo(int K, bool verbose);
+    //void createMetaRambo(int K, bool verbose);
 
     void serializeRAMBO(std::string dir);
 
     void deserializeRAMBO(std::vector<std::string> dir);
 
-    void insertion2(std::vector<std::string> alllines);
+    //void insertion2(std::vector<std::string> alllines);
 
-    bitArray queryseq(std::string query_key, int len);
+    //bitArray queryseq(std::string query_key, int len);
 
-    void insertionRare(std::string setID, std::vector<std::string> keys);
+    //void insertionRare(std::string setID, std::vector<std::string> keys);
 
 
 
     //method for blockchain data
-    void createMetaRambo_range(std::unordered_map<std::string, std::vector<int>> &testKeys, bool verbose);
+    //void createMetaRambo_range(std::unordered_map<std::string, std::vector<int>> &testKeys, bool verbose);
 
     void insertion_pairs(std::vector<std::pair<std::string, std::string>> &data_key_number);
 
@@ -52,8 +54,8 @@ public:
 
     void insertion_pair(std::pair<std::string, std::string> pair1);
 
-    bitArray query_bias(std::string query_key, int len, int bias);
-
+    boost::dynamic_bitset<> query_bias(std::string query_key, int len, int bias);
+    std::set<int> query_bias_set(std::string query_key, int len);
 
 
     int R;
@@ -65,7 +67,11 @@ public:
     float FPR;
     int K1;
     BloomFiler **Rambo_array;
-    std::vector<int> *metaRambo;
+    //std::vector<int> *metaRambo;
+    std::unordered_set<int> *metaRambo;
+    
+
+    
 };
 
 #endif

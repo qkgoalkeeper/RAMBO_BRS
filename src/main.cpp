@@ -18,318 +18,267 @@
 #include <unordered_set>
 using namespace std;
 
-const volatile int K2 = 0;
+
 
 int main(int argc, char **argv) {
-
-//string job(argv[1]);
 
     bool insert = false;
     bool ser = false;
     bool test = false;
     bool deser = true;
 
-    int n_perSet = 10000000; //num of items(judge how to build bloomfilter)
+    int n_perSet = 100000; //num of items(judge how to build bloomfilter)
     int R_all = 3;
-    int B_all = 20;
+    int B_all = 1000;
 
     //int K = Ki; // total number of sets
-    int K = 1000000;
-    float fp_ops;
-    float ins_time;
-    float query_time;
+    int K = 10000000;
 
-// constructor
-//RAMBO myRambo(n_perSet, R_all, B_all, K);
+    double insert_raw = 0;
+    double insert_rambo = 0;
+    double search_time = 0;
+    double search_time2 = 0;
 
-//  details of RAMBO set partitioning
-// myRambo.createMetaRambo (K, false);
-// cout<<"created meta"<<endl;
+    //test blockchain data！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
 
-//insert itno RAMBO
-// string SerOpFile ="results/RAMBO_Ser" + to_string(K)+'_'+job +'/';
+    //fstream f("test_modified.txt");
+    fstream f("tag_and_edge_modified.txt");
+    //fstream f("xaa");
+    //unordered_set<string> key_set;
+    std::unordered_map<string, unordered_set<int>> key_set;
+    //int start = 4000000; //开始块范围
+    int start = 4638567;
+    //int end = 4981465;
+    //int end = 13000000; 
+    int end = 12210044;
+    //int end = 8165992; //结束块范围
+    string line;
+    
+    int bias = start - 1;
+    K = end - bias;
 
-//string SerOpFile ="results/RAMBO_clueWeb/";
+    //创建Rambo
+    cout<<"start build myrambo"<<endl;
+    RAMBO myRambo(n_perSet, R_all, B_all, K);
 
-// if (insert == true){
-//   //log files
-//   std::ofstream failedFiles;
-//   failedFiles.open("logFileToy_"+ to_string(K)+'_'+job+".txt");
-//   int stpCnt = 0;
-//   for (int batch =0; batch<K/100; batch++){
-//     chrono::time_point<chrono::high_resolution_clock> t3 = chrono::high_resolution_clock::now();
+    //
+    int now_insert_num = 0;
+    cout<<"start insert lines"<<endl;
 
-//     string dataPath = "data/"+ job +"/inflated/" + to_string(batch) + "_indexed.txt";
-//     std::vector<string> setIDs = readlines(dataPath, 0);
-//     int stpt;
-// 	stpt = 5;
-//     //}
-//     for (uint ss=0; ss<setIDs.size(); ss++){
-//       stpCnt++;
-//       char d = ',';
-//       vector<std::string> setID = line2array(setIDs[ss], d);
-//       string mainfile = "data/"+ job +"/inflated/" + setID[1]+ ".out";
-//       vector<std::string> keys = getctxdata(mainfile);
-//       failedFiles<<mainfile<<" : "<<keys.size()<<std::endl;
+    //文件获取每行插入
+    while(getline(f,line)){
+        std::vector<string> KeySets = line2array(line, ';');
 
-//       if (keys.size()==0){
-//           std::cout<<mainfile<<" does not exists or empty "<<std::endl;
-//           failedFiles<<mainfile<<" does not exists or empty "<<std::endl;
-//       }
 
-//       myRambo.insertion(setID[0], keys);
-
-//     }
-//     chrono::time_point<chrono::high_resolution_clock> t4 = chrono::high_resolution_clock::now();
-//     cout << chrono::duration_cast<chrono::nanoseconds>(t4-t3).count()/1000000000.0 << "sec\n";
-//     ins_time = (t4-t3).count()/1000000000.0;
-//     failedFiles<<"insertion time (sec) of 100 files: "<<ins_time<<endl;
-//   }
-
-//   //serialize myRambo
-//   if (ser){
-// 	//string command = "mkdir "+ SerOpFile;
-//         //system(command.c_str());
-// 	cout<<"Serializing RAMBO at: "<<SerOpFile<<endl;
-//     myRambo.serializeRAMBO(SerOpFile);
-//    //gives number of 1s in 30 BFs
-//    for (int kpp=0;kpp<30;kpp++){
-// 	cout<<"packing: "<<myRambo.Rambo_array[kpp]->m_bits->getcount()<<endl;
-// 	 }
-//   }
-// }
-
-// if (deser){
-//   vector<string> SerOpFile2;
-//   SerOpFile2.push_back(SerOpFile); // mutliple files can be pushed here
-
-//   cout<<"deser starting"<<endl;
-//   myRambo.deserializeRAMBO(SerOpFile2);
-//   std::cout << "desealized!" << '\n';
-// }
-
-    if (test) { //test dna data
-    /*
-        RAMBO myRambo(n_perSet, R_all, B_all, K);
-        // test RAMBO
-        std::vector<string> alllines = readlines("data/ArtfcKmersToy" + to_string(K) + ".txt", 0);
-
-//   std::vector<string> alllines;
-//   alllines.emplace_back(alllines_[0]);
-
-        //std::vector<string> alllines = readlines("data/query.txt", 0);
-        std::vector<string> testKeys;
-        std::vector<int> gt_size;
-        for (uint i = 0; i < alllines.size(); i++) {
-            std::vector<string> KeySets = line2array(alllines[i], ';');//sets for a key
-            testKeys.push_back(KeySets[0]);
-            gt_size.push_back(line2array(KeySets[1], ',').size());
-        }
-        myRambo.createMetaRambo(K, true);
-        // cout<<"load: "<<myRambo.Rambo_array[0]->m_bits->getcount();
-        cout << "total number of queries : " << testKeys.size() << endl;
-        myRambo.insertion2(alllines);
-        cout << "loaded test keys" << endl;
-
-        float fp = 0;
-        std::ofstream FPtestFile;
-        FPtestFile.open("FPtestFileToy.txt");
-        std::clock_t t5_cpu = std::clock();
-        chrono::time_point<chrono::high_resolution_clock> t5 = chrono::high_resolution_clock::now();
-
-        for (std::size_t i = 0; i < testKeys.size(); i++) {
-            bitArray MemVec = myRambo.query(testKeys[i], testKeys[i].size());
-            // cout<<MemVec.getcount()<<endl;
-            // cout<<gt_size[i]<<endl;
-            cout << endl;
-            cout << "==============================================" << testKeys[i] << endl;
-            for (int kp = 0; kp < MemVec.ar_size; kp++) {
-                // std::cout << "kp is" <<kp<< ' ';
-                if (MemVec.A[(kp / 8)] & (1 << (kp % 8))) {
-                    // count++;
-                    cout << "			" << to_string(kp) << " ";
-                }
-            }
-
-            fp = fp + (MemVec.getcount()) * 0.1 / ((K - gt_size[i]) * 0.1);
+        now_insert_num++;
+        if(now_insert_num%100000==0){
+            cout<<"having insert "<<now_insert_num<<" keys!"<<endl;
         }
 
+        std::clock_t insert1 = std::clock();
+        key_set[KeySets[0]].insert(atoi(KeySets[1].c_str()));
+        std::clock_t insert2 = std::clock();
 
-        // cout<<"fp rate is: "<<fp/(testKeys.size()); // false positives/(all negatives)
-        // FPtestFile<<"fp rate is: "<<fp/(testKeys.size()); // false positives/(all negatives)
+        myRambo.createMetaRambo_single(atoi(KeySets[1].c_str()));
 
-        fp_ops = fp / (testKeys.size());
+        myRambo.insertion_pair(make_pair(KeySets[0], KeySets[1]));
+        std::clock_t insert3 = std::clock();
 
-        cout << endl;
-        std::clock_t t6_cpu = std::clock();
-        chrono::time_point<chrono::high_resolution_clock> t6 = chrono::high_resolution_clock::now();
-        float QTpt_cpu = 1000.0 * (t6_cpu - t5_cpu) / (CLOCKS_PER_SEC * testKeys.size()); //in ms
-        float QTpt = chrono::duration_cast<chrono::nanoseconds>(t6 - t5).count() / (1000000.0 * testKeys.size());
-        cout << "query time wall clock is :" << QTpt << ", cpu is :" << QTpt_cpu << " milisec\n\n";
-        FPtestFile << "query time wall clock is :" << QTpt << ", cpu is :" << QTpt_cpu << " milisec\n\n";
-        query_time = QTpt_cpu;
-        */
-    }else{ 
-        //test blockchain data！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        
-        //std::vector<string> alllines = readlines("test_modified.txt", 0);
-        //std::vector<string> alllines = readlines("tag_and_edge_modified.txt", 0);
-//         std::vector<string> alllines = readlines("test_modified.txt", 0);
-//         std::unordered_map<string, vector<int>> testKeys;
+        insert_raw += double(insert2-insert1)/CLOCKS_PER_SEC;
+        insert_rambo += double(insert3-insert2)/CLOCKS_PER_SEC;
+    }
 
-//         std::vector<pair<string, string>> data_key_number;
-//         int start = 0;
-//         int end = 0;
-//         int bias = -1;
-//         int length = alllines.size();
 
-//         for (uint i = 0; i < length; i++) {
-//             std::vector<string> KeySets = line2array(alllines[i], ';');//sets for a key
-//             // testKeys.push_back(KeySets[0]);
-//             // gt_size.push_back( line2array(KeySets[1], ',').size() );
-//             testKeys[KeySets[0]].emplace_back(atoi(KeySets[1].c_str()));
-//             data_key_number.emplace_back(make_pair(KeySets[0], KeySets[1]));
+    cout<<"start query"<<endl;
+    //ofstream out("1110answer.txt");
+    
+    
+    
+    ofstream out(argv[1]);
+    out<<"bias = "<<bias<<endl;
+    out<<key_set.size()<<endl;
+    
+    double fp = 0;
+    int now_key_num = 0;
 
-//             if (i == 0) {
-//                 start = atoi(KeySets[1].c_str());
-//             }
-//             if (i == length - 1) {
-//                 end = 1 + atoi(KeySets[1].c_str());
-//             }
-//         }
-//         bias = start - 1;
+    int test_num = 0;
+    std::clock_t search1 = std::clock();
 
-//         K = end - bias;
-//         RAMBO myRambo(n_perSet, R_all, B_all, K);
-//         myRambo.createMetaRambo_range(testKeys, false);
-//         myRambo.insertion_pairs(data_key_number);
-
-//         double fp = 0;
-//         for (auto x: testKeys) {
-//             //cout << x.first << ":" << endl;
-//             bitArray MemVec = myRambo.query_bias(x.first, x.first.size(), bias);
-//             // cout<<MemVec.getcount()<<endl;
-//             // cout<<gt_size[i]<<endl;
-//             //cout << "		guess answer:" << endl;
-//             int guess_num = 0;
-//             for (int kp = 0; kp < MemVec.ar_size; kp++) {
-//                 // std::cout << "kp is" <<kp<< ' ';
-//                 if (MemVec.A[(kp / 8)] & (1 << (kp % 8))) {
-//                     guess_num++;
-//                     //cout << "			" << to_string(kp + bias) << endl;
-//                 }
-//             }
-//             /*
-//             cout << endl;
-// //             fp = fp + (MemVec.getcount())*0.1/((K - gt_size[i])*0.1);
-//             cout << "		true answer:" << endl;
-//             for (auto y: x.second) {
-//                 cout << "			" << y << endl;
-//             }
-//             cout << endl;
-//             */
-//             int true_num = x.second.size();
-//             //cout<<"delta_fp = "<<((guess_num-true_num)*0.1)/(guess_num*0.1)<<endl;
-//             fp = fp + ((guess_num-true_num)*0.1)/(guess_num*0.1);
-
-//         }
-//         cout<<"conclusion:"<<endl;
-//         cout<<"sum false positive rate:"<<fp<<endl;
-//         cout<<"key num:"<<testKeys.size()<<endl;
-//         cout<<"average false positive rate:"<<(fp*0.1)/(testKeys.size()*0.1)<<endl;
-
-            //fstream f("test_modified.txt");
-            //fstream f("tag_and_edge_modified.txt");
-            fstream f("xaa");
-            unordered_set<string> key_set;
-            int start = 4638567;
-            //int end = 4981465;
-
-            //int end = 12210044;
-            int end = 8165992;
-            string line;
-            
-            int bias = start - 1;
-            K = end - bias;
+    if(argv[2][0]=='0'){ //0表示查询返回的是bias bitset
+        out<<"using bitset"<<endl;
+        for (auto &x: key_set) {
 
             
+            test_num++;
+            if(test_num == 200000) break;
 
-            cout<<"start build myrambo"<<endl;
-            RAMBO myRambo(n_perSet, R_all, B_all, K);
+            int true_num = x.second.size();
+            int guess_num = 0;
+            //boost::dynamic_bitset<> MemVec = myRambo.query_bias(x, x.size(), bias);
+
+            //using bitset
+            boost::dynamic_bitset<> MemVec = myRambo.query_bias(x.first, x.first.size(), bias);
+
+            //guess_num = MemVec.count();
+            //set<int> MemVec = myRambo.query_bias_set(x.first,x.first.size());
+            //guess_num = MemVec.size();
+
+            out<<x.first<<endl;
+            guess_num = MemVec.count();
 
 
-
-            cout<<"start insert lines"<<endl;
-            while(getline(f,line)){
-                std::vector<string> KeySets = line2array(line, ';');
-                key_set.insert(KeySets[0]);
-                myRambo.createMetaRambo_single(atoi(KeySets[1].c_str()));
-                myRambo.insertion_pair(make_pair(KeySets[0], KeySets[1]));
+            now_key_num++;
+            if(now_key_num%10000==0){
+                cout<<"having searched "<<now_key_num<<" keys!"<<endl;
             }
 
-
-            cout<<"start query"<<endl;
-            //ofstream out("1110answer.txt");
+            // out<<"guess answer num:"<<endl;
+            // out<<guess_num<<endl;
+            // for(auto &y:MemVec){
+            //     out << y<< " ";
+            // }
+            //out<<endl;
+            // for (size_t i = MemVec.find_first(); i != boost::dynamic_bitset<>::npos;) {
+            //     out << i+bias << " ";
+            //     //guess_num++;
+            //     i = MemVec.find_next(i);
+            // }
+            //out<<endl;
             
             
+            // out<<"true answer num:"<<endl;
+            // out<<true_num<<endl;
+            // for(auto &y:x.second){
+            //     out << y << " ";
+            // }
+            // out<<endl;
             
-            ofstream out(argv[1]);
-            out<<"bias = "<<bias<<endl;
-            out<<key_set.size()<<endl;
             
-            
-
-            for (auto &x: key_set) {
-
-
-                cout<<x<<endl;
-                // //cout << x.first << ":" << endl;
-                
-                bitArray MemVec = myRambo.query_bias(x, x.size(), bias);
-                out<<x<<endl;
-                // // out.write(MemVec.A,MemVec.ar_size/8 +1);
-                
-
-                
-                out<<MemVec.getcount()<<endl;
-
-
-                MemVec.bitArray_delete();
-                // // cout<<gt_size[i]<<endl;
-                // //cout << "		guess answer:" << endl;
-                // // int guess_num = 0;
-                
-                // for (int kp = 0; kp < MemVec.ar_size; kp++) {
-                //     // std::cout << "kp is" <<kp<< ' ';
-                //     if (MemVec.A[(kp / 8)] & (1 << (kp % 8))) {
-                //         //guess_num++;
-                //         out <<kp + bias<<" ";
-                //     }
+            if(guess_num<true_num){
+                out<<"wrong: "<<x.first<<endl;
+                // for (size_t i = MemVec.find_first(); i != boost::dynamic_bitset<>::npos;) {
+                //   out << i+bias << " ";
+                //   i = MemVec.find_next(i);
                 // }
                 // out<<endl;
-                
-                
-                
-                
-    //             cout << endl;
-    // //             fp = fp + (MemVec.getcount())*0.1/((K - gt_size[i])*0.1);
-    //             cout << "		true answer:" << endl;
-    //             for (auto y: x.second) {
-    //                 cout << "			" << y << endl;
-    //             }
-    //             cout << endl;
-                
-    //             // int true_num = x.second.size();
-    //             // //cout<<"delta_fp = "<<((guess_num-true_num)*0.1)/(guess_num*0.1)<<endl;
-    //             // fp = fp + ((guess_num-true_num)*0.1)/(guess_num*0.1);
-                
+                // for(auto &y:x.second){
+                //   out << y << " ";
+                // }
+                out<<endl;
             }
             
 
+            out<<((guess_num-true_num)*0.1)/(guess_num*0.1)<<endl;
+
+            fp+=((guess_num-true_num)*0.1)/(guess_num*0.1);
+
+
+        }
+    }else if(argv[2][0]=='1'){ //1表示查询返回的是std::set
+        out<<"using set"<<endl;
+        int a = 0;
+        for (auto &x: key_set) {
+            a++;
+            if(a==200000){
+                break;
+            }
+            int true_num = x.second.size();
+            int guess_num = 0;
+            //boost::dynamic_bitset<> MemVec = myRambo.query_bias(x, x.size(), bias);
+
+            //using bitset
+            //boost::dynamic_bitset<> MemVec = myRambo.query_bias(x.first, x.first.size(), bias);
+
+            //guess_num = MemVec.count();
+            set<int> MemVec = myRambo.query_bias_set(x.first,x.first.size());
+            guess_num = MemVec.size();
+
+            out<<x.first<<endl;
 
 
 
+            now_key_num++;
+            if(now_key_num%10000==0){
+                cout<<"having searched "<<now_key_num<<" keys!"<<endl;
+            }
+
+            // out<<"guess answer num:"<<endl;
+            // out<<guess_num<<endl;
+            // for(auto &y:MemVec){
+            //     out << y<< " ";
+            // }
+            //out<<endl;
+            // for (size_t i = MemVec.find_first(); i != boost::dynamic_bitset<>::npos;) {
+            //     out << i+bias << " ";
+            //     //guess_num++;
+            //     i = MemVec.find_next(i);
+            // }
+            //out<<endl;
+            
+            
+            // out<<"true answer num:"<<endl;
+            // out<<true_num<<endl;
+            // for(auto &y:x.second){
+            //     out << y << " ";
+            // }
+            // out<<endl;
+            
+            
+            if(guess_num<true_num){
+                out<<"wrong: "<<x.first<<endl;
+                // for (size_t i = MemVec.find_first(); i != boost::dynamic_bitset<>::npos;) {
+                //   out << i+bias << " ";
+                //   i = MemVec.find_next(i);
+                // }
+                // out<<endl;
+                // for(auto &y:x.second){
+                //   out << y << " ";
+                // }
+                out<<endl;
+            }
+            
+
+            out<<((guess_num-true_num)*0.1)/(guess_num*0.1)<<endl;
+
+            fp+=((guess_num-true_num)*0.1)/(guess_num*0.1);
+
+
+        }
+
+
+    }else{
+        cout<<"argv[2] should be 0(use bitset) or 1(use std::set)"<<endl;
     }
+    
+
+    std::clock_t search2 = std::clock();
+
+    std::clock_t search3 = std::clock();
+    int b = 0;
+    for (auto &x: key_set) {
+      b++;
+      if(b==100000){
+          break;
+      }
+      auto answer = x.second;
+    }
+
+    std::clock_t search4 = std::clock();
+
+
+
+
+
+    search_time += double(search2-search1)/CLOCKS_PER_SEC;
+    search_time2 += double(search4-search3)/CLOCKS_PER_SEC;
+    out<<"key set size:"<<key_set.size()<<endl;
+    out<<"average fp:"<<(fp*1.0)/(key_set.size())<<endl;
+    out<<"raw map insert time:"<<insert_raw<<endl;
+    out<<"rambo insert time:"<<insert_rambo<<endl;
+    out<<"raw map search time:"<<search_time2<<endl;
+    out<<"rambo search time:"<<search_time<<endl;
+
+    
 
     return 0;
 }
