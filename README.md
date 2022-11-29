@@ -30,13 +30,38 @@ series = {SIGMOD/PODS '21}
 }
 ```
 
-Set parameters and run code
-number of sets in line 7 of include/constants.h
-m, B and R in line 29-31 of src/main.cpp
-run:
-```	
-make
-./build/program 
+
+
+before run：
+
+1.  install boost
+
+（Ubuntu）
+
+```
+sudo apt-get install libboost-all-dev
 ```
 
+
+
+2. Set parameters and run code：
+   start,end in line 40-52 of src/main.cpp (start means the start blocknumber and end means the end blocknumber)
+   m, B and R in line 30-32 of src/main.cpp (three parameter for bloomfilter)
+
+   data filename in line 45 of src/main.cpp ，The format of test file is like test_mofified.txt
+
+​		
+
+
+
+run:
+
+```	
+make
+./build/program answer.txt 0
+```
+
+Argv[1] is the file name to record the performance of rambo.
+
+Argv[2] is 0 or 1,deciding  how to save the search result. (0 for bitset,1 for std::set)
 
