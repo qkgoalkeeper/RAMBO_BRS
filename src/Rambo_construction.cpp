@@ -77,7 +77,7 @@ RAMBO::RAMBO(int n, int r1, int b1, int K) {
     R = r1;
     B = b1;
     K1 = K;
-    p = 0.01; //false positive rate
+    p = 0.01/b1; //false positive rate
     range = ceil(-(n * log(p)) / (log(2) * log(2))); //range
     // range = n;
     // k = 3;
@@ -415,8 +415,8 @@ set<int> RAMBO::query_bias_set(std::string query_key, int len) {
             }
         }
         chrono::time_point<chrono::high_resolution_clock> t13 = chrono::high_resolution_clock::now();
-        cout<<"check hash:"<<((t12-t11).count()/1000000000.0)<<endl;
-        cout<<"emplace:"<<((t13-t12).count()/1000000000.0)<<endl;
+        //cout<<"check hash:"<<((t12-t11).count()/1000000000.0)<<endl;
+        //cout<<"emplace:"<<((t13-t12).count()/1000000000.0)<<endl;
     }
     chrono::time_point<chrono::high_resolution_clock> t2 = chrono::high_resolution_clock::now();
 
@@ -436,7 +436,7 @@ set<int> RAMBO::query_bias_set(std::string query_key, int len) {
 
     //cout<<"delta1:"<<((t2-t1).count()/1000000000.0)<<endl;
     //cout<<"delta2:"<<((tend-t2).count()/1000000000.0)<<endl;
-    cout<<"whole delta:"<<((tend-tstart).count()/1000000000.0)<<endl;
+    //cout<<"whole delta:"<<((tend-tstart).count()/1000000000.0)<<endl;
     
     return resUnion[R-1];
 }

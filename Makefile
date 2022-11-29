@@ -12,6 +12,7 @@ SRC      :=                      \
 	 $(wildcard src/bitArray.cpp) \
 	 $(wildcard src/utils.cpp)   \
 	 $(wildcard src/MyBloom.cpp)   \
+	 $(wildcard src/MyRambo.cpp)   \
 	 $(wildcard src/main.cpp)   \
 
 
